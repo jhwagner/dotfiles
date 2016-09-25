@@ -17,12 +17,16 @@ Plugin 'easymotion/vim-easymotion'
 
 " Code completion
 Plugin 'valloric/youcompleteme'
+Plugin 'tpope/vim-surround'
 
 " Syntax
 Plugin 'sheerun/vim-polyglot'
 
 " Linting
 Plugin 'scrooloose/syntastic'
+
+" Go support
+"Plugin 'fatih/vim-go'
 
 " All plugins must be added before calling end
 call vundle#end()		" required
@@ -47,16 +51,15 @@ syntax enable
 set background=dark
 colorscheme solarized
 
-" Use spaces for all indentation
-set expandtab
-set shiftwidth=2
-set softtabstop=2
+" Tab settings
+autocmd Filetype javascript setlocal ts=2 sts=2 sw=2 expandtab
+autocmd Filetype go         setlocal ts=8 sts=8 sw=8
 
 set number			" enable line numbers
 set completeopt-=preview	" disable preview window
 
-" Disable YouCompleteMe for large files (it will exceed ycm's buffers
-" and fail miserably)
+" Disable YouCompleteMe for large files
+" (it will exceed ycm's buffers and fail miserably)
 let g:ycm_disable_for_files_larger_than_kb = 900
 
 " EasyMotion settings
@@ -76,3 +79,15 @@ omap / <Plug>(easymotion-tn)
 " Custom highlighting
 hi link EasyMotionTarget2First Todo
 hi link EasyMotionTarget2Second Todo
+
+" Syntastic settings
+let g:syntastic_javascript_checkers = ['eslint']
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_wq = 0
+
